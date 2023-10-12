@@ -1,24 +1,33 @@
+import City from '@/entites/City';
 import clientHtttp from '@/http/ClientHttp'
-import { createStore } from 'vuex'
+import { createStore, storeKey } from 'vuex'
 
 export default createStore({
   state: {
-    place: {}
+    citys: [] as Array<City>
   },
   getters: {
+    allCitys: state => {
+      return state.citys
+    }
   },
   mutations: {
-    findPlace(store, place){
-      store.place = place
+    storeCitys(store, data){
+      const citys = [] as City[];
+      data.forEach((c: any, _: any) => {
+        console.log(c)
+        const city = new City(c.name, c.lat, c.lon, c.country, c.state);
+        citys.push(city)
+      });
+      store.citys = citys
     }
   },
   actions: {
-    requestPlace({commit}, placeName){
+    requestCity({commit}, cityName){
       clientHtttp
-      .get(`geo/1.0/direct?q=${placeName},BR-MG,BR&limit=1&appid=bb4059789b4600a1149933bb891ee09b`)
+      .get(`geo/1.0/direct?q=${cityName}&limit=5&appid=bb4059789b4600a1149933bb891ee09b`)
       .then((response) => {
-        console.log(response.data[0])
-        commit('findPlace', response.data[0])
+        commit('storeCitys', response.data)
       });
     }
   },

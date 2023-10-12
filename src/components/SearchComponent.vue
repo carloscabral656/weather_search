@@ -1,7 +1,7 @@
 <template>
     <div id="search-card">
         <font-awesome-icon id="location" :icon="['fas', 'location-dot']" size="xl" />
-        <input type="text" id="search-input" placeholder="Search for a place" v-model="placeName">
+        <input type="text" id="search-input" placeholder="Search for a place" v-model="cityName">
         <font-awesome-icon id="glass" :icon="['fas', 'magnifying-glass']" @click="validatePlace"/>
     </div>
 </template>
@@ -50,26 +50,32 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
+import City from '@/entites/City'
 
 export default defineComponent({
     name: "SearchComponent",
     data(){
         return {
-            placeName: ''
+            cityName: ''
+        }
+    },
+    computed: {
+        citys(): Array<City>{
+            return this.store.getters.allCitys
         }
     },
     components: {
     },
     methods:{
         validatePlace(){
-            if(this.placeName.trim().length === 0){
+            if(this.cityName.trim().length === 0){
                 alert("Input a place name.")
             }else{
-                this.findPlace()
+                this.findCity()
             }
         },
-        findPlace(){
-            this.store.dispatch('requestPlace', this.placeName)
+        findCity(){
+            this.store.dispatch('requestCity', this.cityName)
         }
     },
     setup(){
