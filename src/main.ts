@@ -18,8 +18,11 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 library.add(faLocationDot)
 library.add(faMagnifyingGlass)
 
+import CountryFlag from 'vue-country-flag-next'
+
 createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)
+.component('country-flag', CountryFlag)
 .use(store)
 .use(router)
 .mount('#app')

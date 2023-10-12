@@ -5,6 +5,7 @@
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;1,100;1,600&display=swap');
 
 :root{
   --bk-main: rgb(11, 9, 32);
@@ -17,7 +18,7 @@ body{
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #app{

@@ -1,13 +1,22 @@
 <template>
-    <div>
-        <span>City: {{ city.name }}</span>
-        <span>Country: {{ city.country }}</span>
-        <span>State: {{ city.state }}</span>
+    <div class="city">
+        <div><strong>City:</strong> {{ city.name }}</div>
+        <div><strong>Country:</strong> <country-flag :country="city.country" size='small'/></div>
+        <div><strong>State:</strong> {{ city.state }}</div>
     </div>
 </template>
 
 
-<style scoped>
+<style>
+.city{
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.city:hover{
+    background-color: rgb(206, 206, 206);
+}
+
 </style>
 
 <script lang="ts">

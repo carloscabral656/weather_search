@@ -1,10 +1,11 @@
 <template>
-    <div id="search-card">
-        <font-awesome-icon id="location" :icon="['fas', 'location-dot']" size="xl" />
-        <input type="text" id="search-input" placeholder="Search for a place" v-model="cityName">
-        <font-awesome-icon id="glass" :icon="['fas', 'magnifying-glass']" @click="validatePlace"/>
-    
-        <div class="citys" v-if="citys">
+    <div id="search-component">
+        <div id="search">
+            <font-awesome-icon id="location" :icon="['fas', 'location-dot']" size="xl" />
+            <input type="text" id="search-input" placeholder="Search for a place" v-model="cityName">
+            <font-awesome-icon id="glass" :icon="['fas', 'magnifying-glass']" @click="validatePlace"/>
+        </div>
+        <div id="citys" v-if="citys.length > 0">
             <CityComponent v-for="(city, index) in citys" :key="index" :city="city"/>
         </div>
     </div>
@@ -12,28 +13,30 @@
 
 
 
-<style scoped>
+<style>
 
-#search-card{
-    width: 30vw;
-    height: 10vh;
+#search-component{
     background-color: white;
+    width: 30vw;
     border-radius: 20px;
-    padding: 10px;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 8fr 1fr;
-    align-items: center;
 }
 
+    #search{
+        padding: 4%;
+        display: grid;
+        grid-template-columns: 1fr 8fr 1fr;
+        align-items: center;
+    }
+
     #search-input{
+        max-width: 100%;
         padding: 10px;
         border-radius: 20px;
         border: none;
     }
 
     #search-input:focus{
-        border: 1px solid grey;
+        border: none;
     }
 
     #location{
@@ -42,6 +45,10 @@
 
     #glass{
         justify-self: center;
+    }
+
+    #citys{
+        padding: 4%;
     }
 
 #search-input{
