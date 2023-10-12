@@ -11,6 +11,7 @@
 .city{
     padding: 1rem;
     border-radius: 20px;
+    cursor: pointer;
 }
 
 .city:hover{

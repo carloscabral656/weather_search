@@ -190,13 +190,21 @@ export default defineComponent({
         CityComponent,
         ButtonComponent
     },
+    created(){
+      window.addEventListener("keydown", this.validatePlaceEnter);
+    },
     methods:{
+        validatePlaceEnter(e: KeyboardEvent){
+          if(e.key === "Enter"){
+            this.validatePlace()
+          }
+        },
         validatePlace(){
-            if(this.cityName.trim().length === 0){
-                alert("Input a place name.")
-            }else{
-                this.findCity()
-            }
+          if(this.cityName.trim().length === 0){
+              alert("Input a place name.")
+          }else{
+              this.findCity()
+          }
         },
         findCity(){
             this.store.dispatch('requestCity', this.cityName)

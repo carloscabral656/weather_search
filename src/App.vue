@@ -1,5 +1,6 @@
 <template>
   <main>
+    <h1 id="title" v-if="citys.length === 0">Weather Now</h1>
     <SearchComponent />
   </main>
 </template>
@@ -30,16 +31,35 @@ body{
   background-color: var(--bk-main);
 }
 
+  #title{
+    color: white;
+    text-align: center;
+    font-size: 3rem;
+  }
+
 </style>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import SearchComponent from '@/components/SearchComponent.vue';
+import City from "@/entites/City"
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: "App",
+  computed: {
+    citys(): Array<City>{
+      return this.store.getters.allCitys
+    }
+  },
   components: {
     SearchComponent
+  },
+  setup(){
+    const store = useStore()
+    return {
+      store
+    }
   }
 })
 </script>
