@@ -9,7 +9,7 @@
 
 <style>
 .city{
-    padding: 10px;
+    padding: 1rem;
     border-radius: 20px;
 }
 
