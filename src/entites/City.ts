@@ -1,9 +1,9 @@
 export default class City {
-    protected name : string;
-    protected long : number;
-    protected lat  : number;
-    protected country : string;
-    protected state : string;
+    private _name : string;
+    private _long : number;
+    private _lat  : number;
+    private _country : string;
+    private _state : string;
 
     constructor(
         name: string, 
@@ -12,10 +12,31 @@ export default class City {
         country: string,
         state: string
     ){
-        this.name = name;
-        this.long = long;
-        this.lat = lat;
-        this.country = country;
-        this.state = state;
+        this._name = name;
+        this._long = long;
+        this._lat = lat;
+        this._country = country;
+        this._state = state;
     }
+
+    get name(): string{
+        return this._name
+    }
+    
+    get long(): number{
+        return this._long
+    }
+
+    get lat(): number{
+        return this._lat
+    }
+
+    get country(): string{
+        return this._country
+    }
+
+    get state(): string{
+        return this._state
+    }
+
 }

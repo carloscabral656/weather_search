@@ -3,6 +3,10 @@
         <font-awesome-icon id="location" :icon="['fas', 'location-dot']" size="xl" />
         <input type="text" id="search-input" placeholder="Search for a place" v-model="cityName">
         <font-awesome-icon id="glass" :icon="['fas', 'magnifying-glass']" @click="validatePlace"/>
+    
+        <div class="citys" v-if="citys">
+            <CityComponent v-for="(city, index) in citys" :key="index" :city="city"/>
+        </div>
     </div>
 </template>
 
@@ -50,7 +54,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
-import City from '@/entites/City'
+import City from '@/entites/City';
+import CityComponent from '@/components/CityComponent.vue'
 
 export default defineComponent({
     name: "SearchComponent",
@@ -65,6 +70,7 @@ export default defineComponent({
         }
     },
     components: {
+        CityComponent
     },
     methods:{
         validatePlace(){
