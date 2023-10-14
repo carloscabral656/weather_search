@@ -1,7 +1,6 @@
 import City from '@/entites/City';
 import Weather from '@/entites/Weather';
 import clientHtttp from '@/http/ClientHttp'
-import { PropType } from 'vue';
 import { createStore } from 'vuex'
 
 export default createStore({
@@ -55,6 +54,11 @@ export default createStore({
         humidity,
         feelsLike
       )
+    },
+
+    clearWeather(store){
+      store.weather = {} as Weather
+      store.chosenCity = {} as City
     }
 
   },
@@ -79,6 +83,10 @@ export default createStore({
 
     chosenCity({commit}, city){
       commit('addChosenCity', city)
+    },
+
+    clearWeather({commit}){
+      commit('clearWeather')
     }
   },
   modules: {

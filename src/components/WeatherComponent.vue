@@ -1,5 +1,10 @@
 <template>
-    <div id="weather">
+    <div id="weather"> 
+        <div id="close">
+            <ButtonComponent shape="CIRCLE" @click="clear">
+            <strong>x</strong>
+            </ButtonComponent>
+        </div>
         <div id="city">{{ chosenCity.name }}</div>
         <div id="weather_icon">
             <img :src=icon id="weather_img">
@@ -26,10 +31,15 @@
 <style scoped>
 #weather{
     width: 500px;
-    height: 70vh;
+    height: 80vh;
     background-color: aliceblue;
     border-radius: 20px;
-    padding: 20px;
+    padding: 40px;
+}
+
+#close{
+    display: flex;
+    justify-content: right;
 }
 
 #city{
@@ -92,7 +102,7 @@
 <script lang="ts">
 import City from '@/entites/City';
 import Weather from '@/entites/Weather';
-import { icon } from '@fortawesome/fontawesome-svg-core';
+import ButtonComponent from './ButtonComponent.vue';
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
 
@@ -110,6 +120,14 @@ export default defineComponent({
         icon() : string{ 
             let t = this.store.getters.currentWeather.icon
             return `https://openweathermap.org/img/wn/${t}@2x.png`
+        }
+    },
+    components: {
+        ButtonComponent
+    },
+    methods: {
+        clear(){
+            this.store.dispatch('clearWeather')
         }
     },
     setup(){
