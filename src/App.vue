@@ -1,7 +1,21 @@
 <template>
   <main>
-    <h1 id="title" v-if="citys.length === 0">Weather Now</h1>
-    <SearchComponent />
+    <h1 
+      id="title" 
+      v-if="
+        (citys.length === 0) && 
+        (Object.keys(currentWeather).length === 0)"
+    >
+      Weather Now
+    </h1>
+
+    <SearchComponent 
+      v-if="Object.keys(currentWeather).length === 0"
+    />
+    
+    <WeatherComponent 
+      v-if="Object.keys(currentWeather).length !== 0"
+    />
   </main>
 </template>
 
@@ -42,18 +56,25 @@ body{
 <script lang="ts">
 import { defineComponent } from 'vue';
 import SearchComponent from '@/components/SearchComponent.vue';
+import WeatherComponent from '@/components/WeatherComponent.vue';
 import City from "@/entites/City"
 import { useStore } from 'vuex';
+import Weather from './entites/Weather';
 
 export default defineComponent({
   name: "App",
   computed: {
     citys(): Array<City>{
       return this.store.getters.allCitys
+    },
+
+    currentWeather(): Weather{
+      return this.store.getters.currentWeather
     }
   },
   components: {
-    SearchComponent
+    SearchComponent,
+    WeatherComponent
   },
   setup(){
     const store = useStore()
