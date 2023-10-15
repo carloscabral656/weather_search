@@ -2,10 +2,28 @@
     <div id="weather"> 
         <div id="close">
             <ButtonComponent shape="CIRCLE" @click="clear">
-            <strong>x</strong>
+                <strong>x</strong>
             </ButtonComponent>
         </div>
-        <div id="city">{{ chosenCity.name }}</div>
+        <div id="scale">
+            <select 
+                name="" 
+                id="" 
+                v-model="nextScale" 
+                @change="convertScale"
+            >
+                <option 
+                    v-for="(scale, index) in scales" 
+                    :key="index" 
+                    :value="scale.id"
+                >
+                    {{ scale.name }}
+                </option>
+            </select>
+        </div>
+        <div id="city">
+            {{ chosenCity.name }}
+        </div>
         <div id="weather_icon">
             <img :src=icon id="weather_img">
         </div>
@@ -30,8 +48,8 @@
 
 <style scoped>
 #weather{
-    width: 500px;
-    height: 80vh;
+    width: 400px;
+    height: 70vh;
     background-color: aliceblue;
     border-radius: 20px;
     padding: 40px;
@@ -42,6 +60,22 @@
     justify-content: right;
 }
 
+#scale{
+    padding: 5px;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+    #scale select {
+        height: 40px;
+        width: 50%;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+    }
+
 #city{
     height: 10%;
     text-align: center;
@@ -50,7 +84,7 @@
 }
 
 #weather_icon{
-    height: 60%;
+    height: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -105,9 +139,17 @@ import Weather from '@/entites/Weather';
 import ButtonComponent from './ButtonComponent.vue';
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
+import Scale from '@/entites/Scale';
+import { convertScale } from '@/mixins/Scales';
 
 export default defineComponent({
     name: "WeatherComponent",
+    data(){
+        return {
+            currentScale: 0,
+            nextScale: 0
+        }
+    },
     computed: {
         chosenCity() : City{
             return this.store.getters.chosenCity
@@ -120,14 +162,52 @@ export default defineComponent({
         icon() : string{ 
             let t = this.store.getters.currentWeather.icon
             return `https://openweathermap.org/img/wn/${t}@2x.png`
-        }
+        },
+
+        scales(): Array<Scale>{
+            return this.store.getters.scales
+        },
+
+        getCurrentScale(): Scale{
+            let scale = this.scales.find((s) => {
+                return s.id === this.currentScale
+            });
+            if(!scale) scale = this.scales[0];
+            return scale;
+        },
+
+        getNextScale(): Scale{
+            let scale = this.scales.find((s) => {
+                return s.id === this.nextScale
+            });
+            if(!scale) scale = this.scales[0];
+            return scale;
+        },
     },
     components: {
         ButtonComponent
     },
+    mixins: [
+        convertScale
+    ],
     methods: {
         clear(){
             this.store.dispatch('clearWeather')
+        },
+
+        convertScale(){
+            const currentScale: Scale = this.getCurrentScale;
+            const nextScale: Scale = this.getNextScale;
+            console.log(currentScale, nextScale);
+            let newTemperature = 0;
+            if(currentScale.simbol === 'K' && nextScale.simbol === 'F'){
+                newTemperature = convertScale.kelvinToFahrenheit(this.currentWeather.temperature)
+            }else if(currentScale.simbol === 'K' && nextScale.simbol === 'C'){
+                newTemperature = convertScale.kelvinToCelsius(this.currentWeather.temperature)
+            }
+            this.store.dispatch('updateTemperature', newTemperature)
+            this.currentScale = nextScale.id;
+            this.nextScale = 0;
         }
     },
     setup(){

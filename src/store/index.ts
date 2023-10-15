@@ -1,4 +1,5 @@
 import City from '@/entites/City';
+import Scale from '@/entites/Scale';
 import Weather from '@/entites/Weather';
 import clientHtttp from '@/http/ClientHttp'
 import { createStore } from 'vuex'
@@ -7,7 +8,12 @@ export default createStore({
   state: {
     citys: [] as Array<City>,
     chosenCity: {} as City,
-    weather: {} as Weather
+    weather: {} as Weather,
+    scales: [
+      new Scale(1, 'Kelvin', 'K'),
+      new Scale(2, 'Fahrenheit', 'F'),
+      new Scale(3, 'Celsius', 'C')
+    ] as Array<Scale>
   },
   getters: {
     allCitys: state => {
@@ -20,6 +26,16 @@ export default createStore({
 
     currentWeather: (state) => {
       return state.weather
+    },
+
+    scales: (state) : Array<Scale> => {
+      return state.scales
+    },
+
+    getScaleBySimbol: (state, simbol) => {
+      return state.scales.find((s) => {
+        return s.simbol === simbol;
+      });
     }
   },
   mutations: {
@@ -59,6 +75,10 @@ export default createStore({
     clearWeather(store){
       store.weather = {} as Weather
       store.chosenCity = {} as City
+    },
+
+    updateTemperature(store, newTemperature: number){
+      store.weather.temperature = newTemperature;
     }
 
   },
@@ -87,7 +107,12 @@ export default createStore({
 
     clearWeather({commit}){
       commit('clearWeather')
+    },
+
+    updateTemperature({commit}, newValue){
+      commit('updateTemperature', newValue)
     }
+
   },
   modules: {
   }
