@@ -204,6 +204,14 @@ export default defineComponent({
                 newTemperature = convertScale.kelvinToFahrenheit(this.currentWeather.temperature)
             }else if(currentScale.simbol === 'K' && nextScale.simbol === 'C'){
                 newTemperature = convertScale.kelvinToCelsius(this.currentWeather.temperature)
+            }else if(currentScale.simbol === 'F' && nextScale.simbol === 'K'){
+                newTemperature = convertScale.fahrenheitToKelvin(this.currentWeather.temperature)
+            }else if(currentScale.simbol === 'F' && nextScale.simbol === 'C'){
+                newTemperature = convertScale.fahrenheitToCelsius(this.currentWeather.temperature)
+            }else if(currentScale.simbol === 'C' && nextScale.simbol === 'K'){
+                newTemperature = convertScale.celsiusToKelvin(this.currentWeather.temperature)
+            }else if(currentScale.simbol === 'C' && nextScale.simbol === 'F'){
+                newTemperature = convertScale.celsiusToFahrenheit(this.currentWeather.temperature)
             }
             this.store.dispatch('updateTemperature', newTemperature)
             this.currentScale = nextScale.id;
