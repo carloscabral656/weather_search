@@ -1,9 +1,11 @@
+import Temperature from "./Temperature";
+
 export default class Weather {
     private _id: number;
     private _main: string;
     private _description : string;
     private _icon: string;
-    private _temperature: number;
+    private _temperature: Temperature;
     private _wind: number;
     private _humidity : number;
     private _feelsLike : number;
@@ -14,7 +16,7 @@ export default class Weather {
         main : string, 
         description: string,
         icon : string,
-        temperature: number,
+        temperature: Temperature,
         wind: number,
         humidity: number,
         feelsLike: number

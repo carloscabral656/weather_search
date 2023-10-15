@@ -27,7 +27,7 @@
         <div id="weather_icon">
             <img :src=icon id="weather_img">
         </div>
-        <div id="temperature"> {{ currentWeather.temperature }} <span id="scale">K</span> </div>
+        <div id="temperature"> {{ currentWeather.temperature.value }} <span id="scale">{{ currentWeather.temperature.scale.simbol }}</span> </div>
         <div id="weather_description">{{ currentWeather.main.toUpperCase() }}</div>
         <div id="other_informations">
             <div class="information">
@@ -201,17 +201,17 @@ export default defineComponent({
             console.log(currentScale, nextScale);
             let newTemperature = 0;
             if(currentScale.simbol === 'K' && nextScale.simbol === 'F'){
-                newTemperature = convertScale.kelvinToFahrenheit(this.currentWeather.temperature)
+                newTemperature = convertScale.kelvinToFahrenheit(this.currentWeather.temperature.value)
             }else if(currentScale.simbol === 'K' && nextScale.simbol === 'C'){
-                newTemperature = convertScale.kelvinToCelsius(this.currentWeather.temperature)
+                newTemperature = convertScale.kelvinToCelsius(this.currentWeather.temperature.value)
             }else if(currentScale.simbol === 'F' && nextScale.simbol === 'K'){
-                newTemperature = convertScale.fahrenheitToKelvin(this.currentWeather.temperature)
+                newTemperature = convertScale.fahrenheitToKelvin(this.currentWeather.temperature.value)
             }else if(currentScale.simbol === 'F' && nextScale.simbol === 'C'){
-                newTemperature = convertScale.fahrenheitToCelsius(this.currentWeather.temperature)
+                newTemperature = convertScale.fahrenheitToCelsius(this.currentWeather.temperature.value)
             }else if(currentScale.simbol === 'C' && nextScale.simbol === 'K'){
-                newTemperature = convertScale.celsiusToKelvin(this.currentWeather.temperature)
+                newTemperature = convertScale.celsiusToKelvin(this.currentWeather.temperature.value)
             }else if(currentScale.simbol === 'C' && nextScale.simbol === 'F'){
-                newTemperature = convertScale.celsiusToFahrenheit(this.currentWeather.temperature)
+                newTemperature = convertScale.celsiusToFahrenheit(this.currentWeather.temperature.value)
             }
             this.store.dispatch('updateTemperature', newTemperature)
             this.currentScale = nextScale.id;

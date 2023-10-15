@@ -1,5 +1,6 @@
 import City from '@/entites/City';
 import Scale from '@/entites/Scale';
+import Temperature from '@/entites/Temperature';
 import Weather from '@/entites/Weather';
 import clientHtttp from '@/http/ClientHttp'
 import { createStore } from 'vuex'
@@ -56,7 +57,10 @@ export default createStore({
 
     storeWeather(store, weather){
       const w = weather.weather[0];
-      const t = weather.main.temp;
+      const t = new Temperature(
+        weather.temp,
+        new Scale(1, 'Kelvin', 'K')
+      );
       const wind = weather.wind.speed;
       const humidity = weather.main.humidity;
       const feelsLike = weather.main.feels_like;
@@ -77,7 +81,7 @@ export default createStore({
       store.chosenCity = {} as City
     },
 
-    updateTemperature(store, newTemperature: number){
+    updateTemperature(store, newTemperature: Temperature){
       store.weather.temperature = newTemperature;
     }
 
