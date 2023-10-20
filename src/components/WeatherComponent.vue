@@ -198,7 +198,6 @@ export default defineComponent({
         convertScale(){
             const currentScale: Scale = this.getCurrentScale;
             const nextScale: Scale = this.getNextScale;
-            console.log(currentScale, nextScale);
             let newTemperature = 0;
             if(currentScale.simbol === 'K' && nextScale.simbol === 'F'){
                 newTemperature = convertScale.kelvinToFahrenheit(this.currentWeather.temperature.value)

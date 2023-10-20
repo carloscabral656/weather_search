@@ -58,7 +58,7 @@ export default createStore({
     storeWeather(store, weather){
       const w = weather.weather[0];
       const t = new Temperature(
-        weather.temp,
+        weather.main.temp,
         new Scale(1, 'Kelvin', 'K')
       );
       const wind = weather.wind.speed;
@@ -74,6 +74,7 @@ export default createStore({
         humidity,
         feelsLike
       )
+      console.log()
     },
 
     clearWeather(store){
@@ -100,6 +101,7 @@ export default createStore({
         clientHtttp
         .get(`/data/2.5/weather?lat=${this.getters.chosenCity.lat}&lon=${this.getters.chosenCity.long}&appid=bb4059789b4600a1149933bb891ee09b`)
         .then((response) => {
+          console.log(response.data)
           commit('storeWeather', response.data)
         });
       }
