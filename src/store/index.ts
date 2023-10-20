@@ -56,6 +56,7 @@ export default createStore({
     },
 
     storeWeather(store, weather){
+      console.log(weather)
       const w = weather.weather[0];
       const t = new Temperature(
         weather.main.temp,

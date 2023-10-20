@@ -141,6 +141,7 @@ import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
 import Scale from '@/entites/Scale';
 import { convertScale } from '@/mixins/Scales';
+import Temperature from '@/entites/Temperature';
 
 export default defineComponent({
     name: "WeatherComponent",
@@ -169,11 +170,7 @@ export default defineComponent({
         },
 
         getCurrentScale(): Scale{
-            let scale = this.scales.find((s) => {
-                return s.id === this.currentScale
-            });
-            if(!scale) scale = this.scales[0];
-            return scale;
+            return this.store.getters.currentWeather.temperature.scale;
         },
 
         getNextScale(): Scale{
@@ -197,7 +194,11 @@ export default defineComponent({
 
         convertScale(){
             const currentScale: Scale = this.getCurrentScale;
+            console.log("Current Scale")
+            console.log(currentScale)
+
             const nextScale: Scale = this.getNextScale;
+            console.log(nextScale)
             let newTemperature = 0;
             if(currentScale.simbol === 'K' && nextScale.simbol === 'F'){
                 newTemperature = convertScale.kelvinToFahrenheit(this.currentWeather.temperature.value)
@@ -212,9 +213,10 @@ export default defineComponent({
             }else if(currentScale.simbol === 'C' && nextScale.simbol === 'F'){
                 newTemperature = convertScale.celsiusToFahrenheit(this.currentWeather.temperature.value)
             }
-            this.store.dispatch('updateTemperature', newTemperature)
-            this.currentScale = nextScale.id;
-            this.nextScale = 0;
+            let temperature = new Temperature(newTemperature, nextScale);
+            this.store.dispatch('updateTemperature', temperature)
+            //this.currentScale = nextScale.id;
+            //this.nextScale = 0;
         }
     },
     setup(){

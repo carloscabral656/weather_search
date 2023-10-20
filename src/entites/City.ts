@@ -7,8 +7,8 @@ export default class City {
 
     constructor(
         name: string, 
-        long: number, 
         lat: number,
+        long: number, 
         country: string,
         state: string
     ){
