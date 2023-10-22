@@ -59,7 +59,7 @@ export default createStore({
       console.log(weather)
       const w = weather.weather[0];
       const t = new Temperature(
-        weather.main.temp,
+        Math.ceil(Number(weather.main.temp)),
         new Scale(1, 'Kelvin', 'K')
       );
       const wind = weather.wind.speed;

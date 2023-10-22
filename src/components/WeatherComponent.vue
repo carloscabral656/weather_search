@@ -6,20 +6,7 @@
             </ButtonComponent>
         </div>
         <div id="scale">
-            <select 
-                name="" 
-                id="" 
-                v-model="nextScale" 
-                @change="convertScale"
-            >
-                <option 
-                    v-for="(scale, index) in scales" 
-                    :key="index" 
-                    :value="scale.id"
-                >
-                    {{ scale.name }}
-                </option>
-            </select>
+            <ScaleComponent />
         </div>
         <div id="city">
             {{ chosenCity.name }}
@@ -59,22 +46,6 @@
     display: flex;
     justify-content: right;
 }
-
-#scale{
-    padding: 5px;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-}
-
-    #scale select {
-        height: 40px;
-        width: 50%;
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        outline: none;
-    }
 
 #city{
     height: 10%;
@@ -135,88 +106,35 @@
 
 <script lang="ts">
 import City from '@/entites/City';
-import Weather from '@/entites/Weather';
 import ButtonComponent from './ButtonComponent.vue';
+import ScaleComponent from '@/components/ScaleComponent.vue';
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
-import Scale from '@/entites/Scale';
-import { convertScale } from '@/mixins/Scales';
-import Temperature from '@/entites/Temperature';
+import Weather from '@/entites/Weather';
 
 export default defineComponent({
     name: "WeatherComponent",
-    data(){
-        return {
-            currentScale: 0,
-            nextScale: 0
-        }
-    },
     computed: {
-        chosenCity() : City{
-            return this.store.getters.chosenCity
-        },
-
         currentWeather(): Weather{
             return this.store.getters.currentWeather
+        },
+
+        chosenCity() : City{
+            return this.store.getters.chosenCity
         },
 
         icon() : string{ 
             let t = this.store.getters.currentWeather.icon
             return `https://openweathermap.org/img/wn/${t}@2x.png`
-        },
-
-        scales(): Array<Scale>{
-            return this.store.getters.scales
-        },
-
-        getCurrentScale(): Scale{
-            return this.store.getters.currentWeather.temperature.scale;
-        },
-
-        getNextScale(): Scale{
-            let scale = this.scales.find((s) => {
-                return s.id === this.nextScale
-            });
-            if(!scale) scale = this.scales[0];
-            return scale;
-        },
+        }
     },
     components: {
-        ButtonComponent
+        ButtonComponent,
+        ScaleComponent
     },
-    mixins: [
-        convertScale
-    ],
     methods: {
         clear(){
             this.store.dispatch('clearWeather')
-        },
-
-        convertScale(){
-            const currentScale: Scale = this.getCurrentScale;
-            console.log("Current Scale")
-            console.log(currentScale)
-
-            const nextScale: Scale = this.getNextScale;
-            console.log(nextScale)
-            let newTemperature = 0;
-            if(currentScale.simbol === 'K' && nextScale.simbol === 'F'){
-                newTemperature = convertScale.kelvinToFahrenheit(this.currentWeather.temperature.value)
-            }else if(currentScale.simbol === 'K' && nextScale.simbol === 'C'){
-                newTemperature = convertScale.kelvinToCelsius(this.currentWeather.temperature.value)
-            }else if(currentScale.simbol === 'F' && nextScale.simbol === 'K'){
-                newTemperature = convertScale.fahrenheitToKelvin(this.currentWeather.temperature.value)
-            }else if(currentScale.simbol === 'F' && nextScale.simbol === 'C'){
-                newTemperature = convertScale.fahrenheitToCelsius(this.currentWeather.temperature.value)
-            }else if(currentScale.simbol === 'C' && nextScale.simbol === 'K'){
-                newTemperature = convertScale.celsiusToKelvin(this.currentWeather.temperature.value)
-            }else if(currentScale.simbol === 'C' && nextScale.simbol === 'F'){
-                newTemperature = convertScale.celsiusToFahrenheit(this.currentWeather.temperature.value)
-            }
-            let temperature = new Temperature(newTemperature, nextScale);
-            this.store.dispatch('updateTemperature', temperature)
-            //this.currentScale = nextScale.id;
-            //this.nextScale = 0;
         }
     },
     setup(){
