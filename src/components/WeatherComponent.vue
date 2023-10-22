@@ -54,6 +54,13 @@
     font-weight: 700;
 }
 
+#scale{
+    padding: 5px;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+}
+
 #weather_icon{
     height: 50%;
     display: flex;

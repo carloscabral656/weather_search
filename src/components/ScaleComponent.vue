@@ -1,6 +1,5 @@
 <template>
-    <select 
-        id="scale"
+    <select
         v-model="nextScaleId"
         @change="convertTemperature"
     >
@@ -92,25 +91,18 @@ export default defineComponent({
 </script>
 
 
-<style>
-#scale{
-    font-size: 1rem;
-    padding: 5px;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-}
-
-    #scale select {
+<style scoped>
+    #scale select{
         height: 40px;
         width: 50%;
         padding: 10px;
-        border-radius: 10px;
+        border-radius: 5px;
         border: none;
         outline: none;
+        background-color: rgb(207, 207, 207);
     }
 
     #scale select option{
-        
+        background-color: rgb(207, 207, 207);
     }
 </style>
