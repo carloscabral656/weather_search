@@ -1,12 +1,12 @@
 <template>
     <div id="weather"> 
-        <div id="country">
-            <span class="" style="margin-right: 5px;">{{ chosenCity.country }}</span><font-awesome-icon :icon="['fas', 'location-dot']"/>
-        </div>
         <div id="close">
             <ButtonComponent shape="CIRCLE" @click="clear">
                 <font-awesome-icon :icon="['fas', 'x']" />
             </ButtonComponent>
+        </div>
+        <div id="country">
+            <span class="" style="margin-right: 5px;">{{ chosenCity.country }}</span><font-awesome-icon :icon="['fas', 'location-dot']"/>
         </div>
         <div id="scale">
             <ScaleComponent />
@@ -30,7 +30,7 @@
             </div>
             <div class="information">
                 <div class="title">Feels Like</div>
-                <div>{{ currentWeather.feelsLike }} K</div>
+                <div>{{ currentWeather.feelsLike.value }} K</div>
             </div>
         </div>
     </div>
