@@ -5,7 +5,7 @@
         </div>
         <div id="close">
             <ButtonComponent shape="CIRCLE" @click="clear">
-                <strong>x</strong>
+                <font-awesome-icon :icon="['fas', 'x']" />
             </ButtonComponent>
         </div>
         <div id="scale">
