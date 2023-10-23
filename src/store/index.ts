@@ -91,8 +91,12 @@ export default createStore({
       store.chosenCity = {} as City
     },
 
-    updateTemperature(store, newTemperature: Temperature){
+    updateMainTemperature(store, newTemperature: Temperature){
       store.weather.temperature = newTemperature;
+    },
+
+    updateFeelsLikeTemperature(store, newTemperature: Temperature){
+      store.weather.feelsLike = newTemperature;
     }
 
   },
@@ -125,8 +129,12 @@ export default createStore({
       commit('clearWeather')
     },
 
-    updateTemperature({commit}, newValue){
-      commit('updateTemperature', newValue)
+    updateMainTemperature({commit}, newValue){
+      commit('updateMainTemperature', newValue)
+    },
+
+    updateFeelsLikeTemperature({commit}, newValue){
+      commit('updateFeelsLikeTemperature', newValue)
     }
 
   },

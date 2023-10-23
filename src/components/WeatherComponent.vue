@@ -30,7 +30,7 @@
             </div>
             <div class="information">
                 <div class="title">Feels Like</div>
-                <div>{{ currentWeather.feelsLike.value }} K</div>
+                <div>{{ currentWeather.feelsLike.value }} {{ currentWeather.feelsLike.scale.simbol }}</div>
             </div>
         </div>
     </div>

@@ -60,26 +60,38 @@ export default defineComponent({
             
             // Take the next scale in vuex attribute
             const nextScale   : Scale = this.getNextScale;
-
-            let newTemperature = 0;
+            
+            // Here we convert the main temperature and the feels like temperature
+            let newMainTemperatureValue = 0;
+            let newFeelsLikeTemperatureValue = 0;
             if(currentScale.simbol === 'K' && nextScale.simbol === 'F'){
-                newTemperature = convertScale.kelvinToFahrenheit(this.currentWeather.temperature.value)
+                newMainTemperatureValue = convertScale.kelvinToFahrenheit(this.currentWeather.temperature.value);
+                newFeelsLikeTemperatureValue = convertScale.kelvinToFahrenheit(this.currentWeather.feelsLike.value);
             }else if(currentScale.simbol === 'K' && nextScale.simbol === 'C'){
-                newTemperature = convertScale.kelvinToCelsius(this.currentWeather.temperature.value)
+                newMainTemperatureValue = convertScale.kelvinToCelsius(this.currentWeather.temperature.value);
+                newFeelsLikeTemperatureValue = convertScale.kelvinToCelsius(this.currentWeather.feelsLike.value);
             }else if(currentScale.simbol === 'F' && nextScale.simbol === 'K'){
-                newTemperature = convertScale.fahrenheitToKelvin(this.currentWeather.temperature.value)
+                newMainTemperatureValue = convertScale.fahrenheitToKelvin(this.currentWeather.temperature.value);
+                newFeelsLikeTemperatureValue = convertScale.fahrenheitToKelvin(this.currentWeather.feelsLike.value);
             }else if(currentScale.simbol === 'F' && nextScale.simbol === 'C'){
-                newTemperature = convertScale.fahrenheitToCelsius(this.currentWeather.temperature.value)
+                newMainTemperatureValue = convertScale.fahrenheitToCelsius(this.currentWeather.temperature.value);
+                newFeelsLikeTemperatureValue = convertScale.fahrenheitToCelsius(this.currentWeather.feelsLike.value);
             }else if(currentScale.simbol === 'C' && nextScale.simbol === 'K'){
-                newTemperature = convertScale.celsiusToKelvin(this.currentWeather.temperature.value)
+                newMainTemperatureValue = convertScale.celsiusToKelvin(this.currentWeather.temperature.value);
+                newFeelsLikeTemperatureValue = convertScale.celsiusToKelvin(this.currentWeather.feelsLike.value);
             }else if(currentScale.simbol === 'C' && nextScale.simbol === 'F'){
-                newTemperature = convertScale.celsiusToFahrenheit(this.currentWeather.temperature.value)
+                newMainTemperatureValue = convertScale.celsiusToFahrenheit(this.currentWeather.temperature.value);
+                newFeelsLikeTemperatureValue = convertScale.celsiusToFahrenheit(this.currentWeather.feelsLike.value);
             }else{
-                newTemperature = this.currentWeather.temperature.value
+                newMainTemperatureValue = this.currentWeather.temperature.value
+                newFeelsLikeTemperatureValue = this.currentWeather.feelsLike.value
             }
-            let temperature = new Temperature(newTemperature, nextScale);
-            this.store.dispatch('updateTemperature', temperature)
-        }
+
+            let newMaintemperature = new Temperature(newMainTemperatureValue, nextScale);
+            let newFeelsLikeTemperature = new Temperature(newFeelsLikeTemperatureValue, nextScale);
+            this.store.dispatch('updateMainTemperature', newMaintemperature);
+            this.store.dispatch('updateFeelsLikeTemperature', newFeelsLikeTemperature);
+        }   
     },
     setup(){
         const store = useStore();
