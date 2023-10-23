@@ -6,6 +6,8 @@ import clientHtttp from '@/http/ClientHttp'
 import { createStore } from 'vuex'
 
 export default createStore({
+
+  
   state: {
     citys: [] as Array<City>,
     chosenCity: {} as City,
@@ -16,6 +18,8 @@ export default createStore({
       new Scale(3, 'Celsius', 'C')
     ] as Array<Scale>
   },
+
+
   getters: {
     allCitys: state => {
       return state.citys
@@ -39,6 +43,8 @@ export default createStore({
       });
     }
   },
+
+
   mutations: {
 
     storeCitys(store, data){
@@ -75,7 +81,6 @@ export default createStore({
         humidity,
         feelsLike
       )
-      console.log()
     },
 
     clearWeather(store){
@@ -88,6 +93,8 @@ export default createStore({
     }
 
   },
+
+
   actions: {
     requestCity({commit}, cityName){
       clientHtttp
@@ -102,7 +109,6 @@ export default createStore({
         clientHtttp
         .get(`/data/2.5/weather?lat=${this.getters.chosenCity.lat}&lon=${this.getters.chosenCity.long}&appid=bb4059789b4600a1149933bb891ee09b`)
         .then((response) => {
-          console.log(response.data)
           commit('storeWeather', response.data)
         });
       }
@@ -121,6 +127,8 @@ export default createStore({
     }
 
   },
+
+
   modules: {
   }
 })

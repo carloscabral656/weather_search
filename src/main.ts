@@ -21,6 +21,7 @@ library.add(faMagnifyingGlass)
 import CountryFlag from 'vue-country-flag-next'
 
 createApp(App)
+.component('fa-location-dot', faLocationDot)
 .component('font-awesome-icon', FontAwesomeIcon)
 .component('country-flag', CountryFlag)
 .use(store)

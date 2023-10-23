@@ -1,5 +1,8 @@
 <template>
     <div id="weather"> 
+        <div id="country">
+            <span class="" style="margin-right: 5px;">{{ chosenCity.country }}</span><font-awesome-icon :icon="['fas', 'location-dot']"/>
+        </div>
         <div id="close">
             <ButtonComponent shape="CIRCLE" @click="clear">
                 <strong>x</strong>
@@ -36,22 +39,21 @@
 <style scoped>
 #weather{
     width: 400px;
-    height: 70vh;
+    height: 80vh;
     background-color: aliceblue;
     border-radius: 20px;
     padding: 40px;
 }
 
+#country {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #close{
     display: flex;
     justify-content: right;
-}
-
-#city{
-    height: 10%;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
 }
 
 #scale{
@@ -61,8 +63,15 @@
     justify-content: center;
 }
 
+#city{
+    height: 10%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
 #weather_icon{
-    height: 50%;
+    height: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
