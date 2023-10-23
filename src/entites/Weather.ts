@@ -8,7 +8,7 @@ export default class Weather {
     private _temperature: Temperature;
     private _wind: number;
     private _humidity : number;
-    private _feelsLike : number;
+    private _feelsLike : Temperature;
 
 
     constructor(
@@ -19,7 +19,7 @@ export default class Weather {
         temperature: Temperature,
         wind: number,
         humidity: number,
-        feelsLike: number
+        feelsLike: Temperature
     ){
         this._id = id;
         this._main = main;

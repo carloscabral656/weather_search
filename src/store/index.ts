@@ -68,9 +68,10 @@ export default createStore({
         Math.ceil(Number(weather.main.temp)),
         new Scale(1, 'Kelvin', 'K')
       );
+
+      const feelsLike = new Temperature(weather.main.feels_like, new Scale(1, 'Kelvin', 'K'));
       const wind = weather.wind.speed;
       const humidity = weather.main.humidity;
-      const feelsLike = weather.main.feels_like;
       store.weather = new Weather(
         w.id,
         w.main,
