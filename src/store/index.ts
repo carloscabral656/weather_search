@@ -2,6 +2,7 @@ import City from '@/entites/City';
 import Scale from '@/entites/Scale';
 import Temperature from '@/entites/Temperature';
 import Weather from '@/entites/Weather';
+import clientCountryHttp from '@/http/ClientCountryHttp';
 import clientHtttp from '@/http/ClientHttp'
 import { createStore } from 'vuex'
 
@@ -50,15 +51,10 @@ export default createStore({
     storeCitys(store, data){
       const citys = [] as City[];
       data.forEach((c: any, _: any) => {
-        console.log(c)
         const city = new City(c.name, c.lat, c.lon, c.country, c.state);
         citys.push(city)
       });
       store.citys = citys
-    },
-
-    addChosenCity(store, city){
-      store.chosenCity = city
     },
 
     storeWeather(store, weather){
@@ -84,6 +80,14 @@ export default createStore({
         humidity,
         feelsLike
       )
+    },
+
+    storeCountry(store, country){
+        store.chosenCity.country = country.name.common
+    },
+
+    addChosenCity(store, city){
+      store.chosenCity = city
     },
 
     clearWeather(store){
@@ -121,8 +125,17 @@ export default createStore({
       }
     },
 
+    requestCountry({commit}, acronym){
+        clientCountryHttp
+        .get(`/alpha/${acronym}`)
+        .then(response => {
+          commit('storeCountry', response.data[0])
+        });
+    },
+
     chosenCity({commit}, city){
       commit('addChosenCity', city)
+      this.dispatch('requestCountry', city.country)
     },
 
     clearWeather({commit}){

@@ -6,7 +6,7 @@
             </ButtonComponent>
         </div>
         <div id="country">
-            <span class="" style="margin-right: 5px;">{{ chosenCity.country }}</span><font-awesome-icon :icon="['fas', 'location-dot']"/>
+            <font-awesome-icon :icon="['fas', 'location-dot']"/><span class="" style="margin-left: 5px;">{{ chosenCity.country }}</span>
         </div>
         <div id="scale">
             <ScaleComponent />
@@ -17,7 +17,7 @@
         <div id="weather_icon">
             <img :src=icon id="weather_img">
         </div>
-        <div id="temperature"> {{ currentWeather.temperature.value }} <span id="scale">{{ currentWeather.temperature.scale.simbol }}</span> </div>
+        <div id="temperature"> {{ currentWeather.temperature.value }} <span id="scale">{{ currentWeather.temperature.scale.simbol }} </span></div>
         <div id="weather_description">{{ currentWeather.main.toUpperCase() }}</div>
         <div id="other_informations">
             <div class="information">
@@ -49,6 +49,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 5px;
 }
 
 #close{
@@ -131,15 +132,15 @@ import Weather from '@/entites/Weather';
 export default defineComponent({
     name: "WeatherComponent",
     computed: {
-        currentWeather(): Weather{
+        currentWeather() : Weather {
             return this.store.getters.currentWeather
         },
 
-        chosenCity() : City{
+        chosenCity() : City {
             return this.store.getters.chosenCity
         },
 
-        icon() : string{ 
+        icon() : string { 
             let t = this.store.getters.currentWeather.icon
             return `https://openweathermap.org/img/wn/${t}@2x.png`
         }
@@ -159,7 +160,6 @@ export default defineComponent({
             store
         }
     }
-
 })
 
 </script>

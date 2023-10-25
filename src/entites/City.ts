@@ -35,6 +35,10 @@ export default class City {
         return this._country
     }
 
+    set country(country){
+        this._country = country
+    }
+
     get state(): string{
         return this._state
     }
