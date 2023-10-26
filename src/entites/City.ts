@@ -51,7 +51,7 @@ export default class City {
         return this._timeZone
     }
 
-    set timeZone(timeZone: TimeZone){
+    set timeZone(timeZone: TimeZone | undefined){
         this._timeZone = timeZone
     }
 }

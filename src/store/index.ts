@@ -1,6 +1,7 @@
 import City from '@/entites/City';
 import Scale from '@/entites/Scale';
 import Temperature from '@/entites/Temperature';
+import TimeZone from '@/entites/TimeZone';
 import Weather from '@/entites/Weather';
 import clientCountryHttp from '@/http/ClientCountryHttp';
 import clientHtttp from '@/http/ClientHttp'
@@ -91,6 +92,11 @@ export default createStore({
       store.chosenCity = city
     },
 
+    addTimeZone(store, timeZone){
+      const time = new TimeZone(timeZone.timestamp, timeZone.formatted);
+      store.chosenCity.timeZone = time;
+    },
+
     clearWeather(store){
       store.weather = {} as Weather
       store.chosenCity = {} as City
@@ -139,7 +145,7 @@ export default createStore({
       .get(`/v2.1/get-time-zone?key=JG65R86GXSK3&format=json&by=zone&zone=${this.state.chosenCity.name}`)
       .then(response => {
         console.log(response.data)
-        //commit('storeCountry', response.data[0])
+        commit('addTimeZone', response.data)
       });
     },
 
