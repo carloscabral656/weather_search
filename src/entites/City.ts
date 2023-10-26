@@ -1,9 +1,12 @@
+import TimeZone from "./TimeZone";
+
 export default class City {
     private _name : string;
     private _long : number;
     private _lat  : number;
     private _country : string;
     private _state : string;
+    private _timeZone?: TimeZone;
 
     constructor(
         name: string, 
@@ -17,6 +20,7 @@ export default class City {
         this._lat = lat;
         this._country = country;
         this._state = state;
+        this._timeZone = undefined;
     }
 
     get name(): string{
@@ -43,4 +47,11 @@ export default class City {
         return this._state
     }
 
+    get timeZone() : TimeZone | undefined{
+        return this._timeZone
+    }
+
+    set timeZone(timeZone: TimeZone){
+        this._timeZone = timeZone
+    }
 }
