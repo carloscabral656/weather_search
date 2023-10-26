@@ -85,7 +85,8 @@ export default createStore({
     },
 
     storeCountry(store, country){
-        store.chosenCity.country = country.name.common
+      console.log(country)
+      store.chosenCity.country = country.name.common
     },
 
     addChosenCity(store, city){

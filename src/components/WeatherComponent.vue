@@ -33,6 +33,9 @@
                 <div>{{ currentWeather.feelsLike.value }} {{ currentWeather.feelsLike.scale.simbol }}</div>
             </div>
         </div>
+        <div id="part_of_day">
+            {{ currentTimeZone }}
+        </div>
     </div>
 </template>
 
@@ -119,6 +122,14 @@
     .title{
         font-weight: 700;
     }
+
+#part_of_day{
+    height: 10%;
+    align-items: stretch;
+    justify-content: space-between;
+    text-align: center; 
+    font-weight: 700;
+}
 </style>
 
 <script lang="ts">
@@ -128,6 +139,8 @@ import ScaleComponent from '@/components/ScaleComponent.vue';
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
 import Weather from '@/entites/Weather';
+import { PartsOfDay } from '@/enums/PartsOfDay'
+import { Colors } from '@/enums/Colors'
 
 export default defineComponent({
     name: "WeatherComponent",
@@ -145,15 +158,32 @@ export default defineComponent({
             return `https://openweathermap.org/img/wn/${t}@2x.png`
         },
 
+        currentTimeZone(){
+            let hours = 0
+            if(this.chosenCity.timeZone){
+                hours = new Date(this.chosenCity.timeZone!.formatted).getHours(); 
+            }
+            if(hours >= 6 && hours <= 12){
+                return PartsOfDay.MORNING
+            }else if(hours <= 17){
+                return PartsOfDay.AFTERNOON
+            }else if(hours <= 19){
+                return PartsOfDay.EVENING
+            }else {
+                return PartsOfDay.NIGHT
+            }
+        },
+
         style(){
             let backgroundColor = '';
-            let hours = new Date(this.chosenCity.timeZone!.formatted).getHours(); 
-            if(hours >= 6 && hours <= 12){
-                backgroundColor = '#82CAFF';
-            } else if(hours <= 18){
-                backgroundColor = '#006899';
-            } else {
-                backgroundColor = '#353283';
+            if(this.currentTimeZone === PartsOfDay.MORNING){
+                backgroundColor = Colors.MORNING_COLOR
+            }else if(this.currentTimeZone === PartsOfDay.AFTERNOON){
+                backgroundColor = Colors.AFTERNOON_COLOR
+            }else if(this.currentTimeZone === PartsOfDay.EVENING){
+                backgroundColor = Colors.EVENING_COLOR
+            }else if(this.currentTimeZone === PartsOfDay.NIGHT){
+                backgroundColor = Colors.NIGHT_COLOR
             }
             return `background-color: ${backgroundColor}`;
         }
