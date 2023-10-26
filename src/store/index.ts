@@ -142,7 +142,7 @@ export default createStore({
 
     requestTimeZone({commit}){
       clientTimeHttp
-      .get(`/v2.1/get-time-zone?key=JG65R86GXSK3&format=json&by=zone&zone=${this.state.chosenCity.name}`)
+      .get(`/v2.1/get-time-zone?key=JG65R86GXSK3&format=json&by=position&lat=${this.getters.chosenCity.lat}&lng=${this.getters.chosenCity.long}`)
       .then(response => {
         console.log(response.data)
         commit('addTimeZone', response.data)
