@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios"
 
-const clientHtttp: AxiosInstance = axios.create({
-    baseURL: "http://api.openweathermap.org"
+const clientTimeHttp: AxiosInstance = axios.create({
+    baseURL: "http://api.timezonedb.com"
 })
 
-export default clientHtttp;
+export default clientTimeHttp;

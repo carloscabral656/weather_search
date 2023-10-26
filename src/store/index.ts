@@ -4,6 +4,7 @@ import Temperature from '@/entites/Temperature';
 import Weather from '@/entites/Weather';
 import clientCountryHttp from '@/http/ClientCountryHttp';
 import clientHtttp from '@/http/ClientHttp'
+import clientTimeHttp from '@/http/ClientTimeHttp';
 import { createStore } from 'vuex'
 
 export default createStore({
@@ -133,9 +134,19 @@ export default createStore({
         });
     },
 
+    requestTimeZone({commit}){
+      clientTimeHttp
+      .get(`/v2.1/get-time-zone?key=JG65R86GXSK3&format=json&by=zone&zone=${this.state.chosenCity.name}`)
+      .then(response => {
+        console.log(response.data)
+        //commit('storeCountry', response.data[0])
+      });
+    },
+
     chosenCity({commit}, city){
       commit('addChosenCity', city)
       this.dispatch('requestCountry', city.country)
+      this.dispatch('requestTimeZone')
     },
 
     clearWeather({commit}){
