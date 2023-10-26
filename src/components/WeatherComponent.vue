@@ -1,5 +1,5 @@
 <template>
-    <div id="weather"> 
+    <div id="weather" :style="style"> 
         <div id="close">
             <ButtonComponent shape="CIRCLE" @click="clear">
                 <font-awesome-icon :icon="['fas', 'x']" />
@@ -143,6 +143,19 @@ export default defineComponent({
         icon() : string { 
             let t = this.store.getters.currentWeather.icon
             return `https://openweathermap.org/img/wn/${t}@2x.png`
+        },
+
+        style(){
+            let backgroundColor = '';
+            let hours = new Date(this.chosenCity.timeZone!.formatted).getHours(); 
+            if(hours >= 6 && hours <= 12){
+                backgroundColor = '#82CAFF';
+            } else if(hours <= 18){
+                backgroundColor = '#006899';
+            } else {
+                backgroundColor = '#353283';
+            }
+            return `background-color: ${backgroundColor}`;
         }
     },
     components: {
