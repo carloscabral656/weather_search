@@ -125,7 +125,7 @@
     }
 
 #part_of_day{
-    height: 15%;
+    height: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
