@@ -35,6 +35,7 @@
         </div>
         <div id="part_of_day">
             {{ currentTimeZone }}
+            <div>{{ new Date(chosenCity.timeZone!.formatted).toISOString().split('T')[0].replaceAll('-', '/') }}</div>
         </div>
     </div>
 </template>
@@ -75,7 +76,7 @@
 }
 
 #weather_icon{
-    height: 40%;
+    height: 35%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,10 +125,11 @@
     }
 
 #part_of_day{
-    height: 10%;
-    align-items: stretch;
-    justify-content: space-between;
-    text-align: center; 
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     font-weight: 700;
 }
 </style>
